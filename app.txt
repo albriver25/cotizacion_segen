@@ -1,0 +1,26 @@
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+app = Flask(__name__)
+
+# Configuración de SQLite
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cotizaciones.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Modelo de la tabla de cotizaciones
+class Cotizacion(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Consecutivo automático
+    cliente_nombre = db.Column(db.String(100), nullable=False)
+    asunto = db.Column(db.String(200), nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
+    cantidad = db.Column(db.Integer, nullable=False)
+    valor_unitario = db.Column(db.Float, nullable=False)
+    valor_total = db.Column(db.Float, nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.now)
+
+# Crear la tabla (si no existe)
+with app.app_context():
+    db.create_all()

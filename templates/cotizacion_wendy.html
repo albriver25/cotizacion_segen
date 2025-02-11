@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización - Seguentech</title>
+    <meta name="description" content="Cotización personalizada para equipos tecnológicos. ¡Garantía y soporte técnico incluido!">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2a5298;
+            padding-bottom: 10px;
+        }
+        .logo img {
+            width: 150px;
+        }
+        .company-details {
+            text-align: right;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background: #2a5298;
+            color: #fff;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 15px;
+            border: none;
+            background: #2a5298;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .buttons button:hover {
+            background: #1e3c72;
+        }
+    </style>
+    <script>
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="https://seguen.tech/wp-content/uploads/2024/11/logo_pagina_oficial_letra_s-removebg-preview.png" alt="Logo de Seguentech">
+            </div>
+            <div class="company-details">
+                <p><strong>NIT:</strong> 79 547665-3</p>
+                <p><strong>Dirección:</strong> Carrera 16 Número 79-20</p>
+                <p><strong>Teléfono:</strong> 315-585-2297</p>
+            </div>
+        </div>
+        <h1>Cotización N° {{ cotizacion.numero_cotizacion }}</h1>
+        <p><strong>Fecha:</strong> {{ cotizacion.fecha_creacion.strftime('%d de %B de %Y') }}</p>
+        <p><strong>Cliente:</strong> {{ cotizacion.cliente_nombre }}</p>
+        <p><strong>Asunto:</strong> {{ cotizacion.asunto }}</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Valor Unitario</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(1, 5) %}
+                {% set cantidad = cotizacion['cantidad' ~ i] %}
+                {% set descripcion = cotizacion['descripcion' ~ i] %}
+                {% set valor_unitario = cotizacion['valor_unitario' ~ i] %}
+                {% set valor_total = cotizacion['valor_total' ~ i] %}
+                {% if cantidad > 0 %}
+                <tr>
+                    <td>{{ cantidad }}</td>
+                    <td>{{ descripcion }}</td>
+                    <td>{{ valor_unitario|currency }}</td>
+                    <td>{{ valor_total|currency }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><strong>Total Final:</strong> {{ (cotizacion.valor_total1 + cotizacion.valor_total2 + cotizacion.valor_total3 + cotizacion.valor_total4)|currency }}</p>
+        
+        <div class="buttons">
+            <button onclick="downloadPDF()">Descargar PDF</button>
+        </div>
+        
+        <div class="footer">
+            <p>Seguentech - Innovación y Tecnología</p>
+            <p>www.seguen.tech | soporte@segen.tech</p>
+        </div>
+    <p><strong>¿Por qué elegirnos?</strong></p>
+            <p>Con más de 9 años de experiencia, en Seguentech nos comprometemos a ofrecerte:</p>
+            <ul>
+                <li>Garantía en cada producto que adquieras con nosotros.</li>
+                <li>Servicio técnico presencial y en línea para brindarte soporte cuando lo necesites.</li>
+                <li>Asesoramiento especializado en licencias, modificaciones de equipos y soluciones tecnológicas.</li>
+            </ul>
+            <p><strong>Ubicación:</strong> Unilago, Bogotá, Colombia</p>
+            <p><strong>WhatsApp:</strong> 315-751-3697</p>
+            <p><em>Esta cotización tiene una validez de 10 días calendario.</em></p>
+        </div>
+    </div>
+</body>
+</html>

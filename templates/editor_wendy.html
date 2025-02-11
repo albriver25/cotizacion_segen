@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cotización - Seguentech</title>
+    <meta name="description" content="Cotización personalizada para equipos tecnológicos. ¡Garantía y soporte técnico incluido!">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background: #2a5298;
+            color: #fff;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Nueva Cotización</h1>
+        <form method="POST" action="{{ url_for('crear_cotizacion') }}">
+            <label for="cliente_nombre">Nombre del Cliente:</label>
+            <input type="text" id="cliente_nombre" name="cliente_nombre" required>
+
+            <label for="asunto">Asunto:</label>
+            <input type="text" id="asunto" name="asunto" required>
+
+            {% for i in range(1, 5) %}
+            <fieldset>
+                <legend>Producto {{ i }}</legend>
+                <label for="descripcion{{ i }}">Descripción:</label>
+                <textarea id="descripcion{{ i }}" name="descripcion{{ i }}" rows="2"></textarea>
+                <label for="cantidad{{ i }}">Cantidad:</label>
+                <input type="number" id="cantidad{{ i }}" name="cantidad{{ i }}" min="0">
+                <label for="valor_unitario{{ i }}">Valor Unitario:</label>
+                <input type="number" id="valor_unitario{{ i }}" name="valor_unitario{{ i }}" step="0.01" min="0">
+            </fieldset>
+            {% endfor %}
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit">Generar Cotización</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
